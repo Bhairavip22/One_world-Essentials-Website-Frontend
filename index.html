@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>oneWorld Essentials</title>
+  <meta name="description" content="Food and medicines for every home, on the day after the Snap.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Offline banner -->
+  <div id="offline-banner" class="banner banner-offline" hidden>
+    You are offline. Your kits, medicines and pass still work. We will sync when the network returns.
+  </div>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="30" r="12" fill="#F2A93B"/>
+        <rect x="4" y="30" width="40" height="14" fill="#13254A"/>
+        <path d="M24 8v6M10 14l4 4M38 14l-4 4M4 26h6M38 26h6" stroke="#F2A93B" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="brand-name">oneWorld <span>Essentials</span></div>
+        <div class="tagline" data-i18n="tagline">Hope · Trust · Certainty · Faster recovery</div>
+      </div>
+    </div>
+    <div class="controls">
+      <label class="ctl">
+        <span class="sr">Region</span>
+        <select id="region-select" aria-label="Region"></select>
+      </label>
+      <label class="ctl">
+        <span class="sr">Language</span>
+        <select id="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="es">Español</option>
+          <option value="ar">العربية</option>
+        </select>
+      </label>
+      <button class="btn-ghost" id="simple-toggle" aria-pressed="false">
+        <span aria-hidden="true">🔠</span> <span data-i18n="simple_mode">Simple mode</span>
+      </button>
+      <button class="btn-ghost" id="read-btn">
+        <span aria-hidden="true">🔊</span> <span data-i18n="read_aloud">Read aloud</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="tabs" aria-label="Main">
+    <button class="tab active" data-view="home"><span class="ti" aria-hidden="true">🏠</span><span data-i18n="nav_home">Home</span></button>
+    <button class="tab" data-view="kits"><span class="ti" aria-hidden="true">🧺</span><span data-i18n="nav_kits">Kits</span></button>
+    <button class="tab" data-view="stock"><span class="ti" aria-hidden="true">📍</span><span data-i18n="nav_stock">Stock pulse</span></button>
+    <button class="tab" data-view="meds"><span class="ti" aria-hidden="true">💊</span><span data-i18n="nav_meds">Medicines</span></button>
+    <button class="tab" data-view="order"><span class="ti" aria-hidden="true">📦</span><span data-i18n="nav_order">Order</span><span class="badge" id="cart-badge" hidden>0</span></button>
+    <button class="tab" data-view="pass"><span class="ti" aria-hidden="true">🤝</span><span data-i18n="nav_pass">Fair share</span></button>
+    <button class="tab" data-view="access"><span class="ti" aria-hidden="true">♿</span><span data-i18n="nav_access">Access</span></button>
+  </nav>
+
+  <main id="main">
+
+    <!-- HOME -->
+    <section class="view active" id="view-home" aria-labelledby="home-h">
+      <div class="hope-card">
+        <div class="hope-text">
+          <p class="eyebrow">Day 1 after the Snap</p>
+          <h1 id="home-h" data-i18n="hope_title">You are not alone.</h1>
+          <p class="lead" data-i18n="hope_body">Food and medicines are still here. We will help you get them, fairly and safely.</p>
+          <div class="hope-stats">
+            <div><strong id="stat-helped">12,480</strong><span>neighbours helped each other today</span></div>
+            <div><strong id="stat-stores">318</strong><span>stores reopened near you</span></div>
+            <div><strong id="stat-delivered">9,214</strong><span>homes received essentials</span></div>
+          </div>
+        </div>
+        <div class="sunrise" aria-hidden="true"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h2 data-i18n="calm_title">Calm meter: supplies in your area</h2>
+          <div id="calm-home" class="calm"></div>
+        </div>
+        <div class="card">
+          <h2>My status</h2>
+          <div id="home-status"></div>
+        </div>
+      </div>
+
+      <h2 class="section-h" data-i18n="need_title">What do you need right now?</h2>
+      <div class="tiles">
+        <button class="tile" data-go="kits"><span class="tile-i" aria-hidden="true">🧺</span><b>Food for my home</b><small>Kits sized for who is left</small><span class="pill p-hope">Hope</span></button>
+        <button class="tile" data-go="stock"><span class="tile-i" aria-hidden="true">📍</span><b>What's open near me</b><small>Live, confirmed by neighbours</small><span class="pill p-trust">Trust</span></button>
+        <button class="tile" data-go="meds"><span class="tile-i" aria-hidden="true">💊</span><b>My medicines</b><small>Days left, generic options</small><span class="pill p-recovery">Faster recovery</span></button>
+        <button class="tile" data-go="order"><span class="tile-i" aria-hidden="true">👵</span><b>Send to my family</b><small>Honest queue, clear arrival time</small><span class="pill p-certainty">Certainty</span></button>
+        <button class="tile" data-go="pass"><span class="tile-i" aria-hidden="true">🤝</span><b>Fair share & help a neighbour</b><small>Pickup pass, neighbour runner</small><span class="pill p-hope">Hope</span></button>
+        <button class="tile" data-go="access"><span class="tile-i" aria-hidden="true">♿</span><b>Easier to use</b><small>Language, voice, no phone</small><span class="pill p-trust">Trust</span></button>
+      </div>
+    </section>
+
+    <!-- KITS -->
+    <section class="view" id="view-kits" aria-labelledby="kits-h">
+      <header class="view-head">
+        <div>
+          <h1 id="kits-h" data-i18n="kits_title">Household reset & essentials kits</h1>
+          <p class="lead" data-i18n="kits_sub">Tell us who is at home now. We size the kit for you.</p>
+        </div>
+        <div class="pills"><span class="pill p-hope">Hope</span><span class="pill p-certainty">Certainty</span></div>
+      </header>
+
+      <div class="grid-2 align-start">
+        <div class="card">
+          <h2>Who is at home now?</h2>
+          <p class="muted">It's okay if this changed overnight. Only count the people who are with you now.</p>
+          <div class="steppers" id="household">
+            <div class="stepper" data-key="adult"><span class="st-i" aria-hidden="true">🧑</span><span class="st-l">Adults</span><button class="st-b" data-d="-1" aria-label="Fewer adults">−</button><output>1</output><button class="st-b" data-d="1" aria-label="More adults">+</button></div>
+            <div class="stepper" data-key="child"><span class="st-i" aria-hidden="true">🧒</span><span class="st-l">Children (2–17)</span><button class="st-b" data-d="-1" aria-label="Fewer children">−</button><output>0</output><button class="st-b" data-d="1" aria-label="More children">+</button></div>
+            <div class="stepper" data-key="elderly"><span class="st-i" aria-hidden="true">👵</span><span class="st-l">Elderly (65+)</span><button class="st-b" data-d="-1" aria-label="Fewer elderly">−</button><output>0</output><button class="st-b" data-d="1" aria-label="More elderly">+</button></div>
+            <div class="stepper" data-key="infant"><span class="st-i" aria-hidden="true">👶</span><span class="st-l">Infants (0–2)</span><button class="st-b" data-d="-1" aria-label="Fewer infants">−</button><output>0</output><button class="st-b" data-d="1" aria-label="More infants">+</button></div>
+          </div>
+          <div class="row">
+            <label class="field">Food needs
+              <select id="diet-select"></select>
+            </label>
+            <label class="field">Kit lasts
+              <select id="days-select">
+                <option value="3">3 days</option>
+                <option value="7">7 days</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div id="kit-output"></div>
+      </div>
+    </section>
+
+    <!-- STOCK PULSE -->
+    <section class="view" id="view-stock" aria-labelledby="stock-h">
+      <header class="view-head">
+        <div>
+          <h1 id="stock-h" data-i18n="stock_title">Stock pulse</h1>
+          <p class="lead" data-i18n="stock_sub">Open stores near you, confirmed by people nearby.</p>
+        </div>
+        <div class="pills"><span class="pill p-trust">Trust</span><span class="pill p-certainty">Certainty</span></div>
+      </header>
+
+      <div class="card calm-card">
+        <h2 data-i18n="calm_title">Calm meter: supplies in your area</h2>
+        <div id="calm-stock" class="calm"></div>
+      </div>
+
+      <div class="chips" role="group" aria-label="Filter stores">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="open">Open now</button>
+        <button class="chip" data-filter="food">🍚 Food</button>
+        <button class="chip" data-filter="water">💧 Water</button>
+        <button class="chip" data-filter="medicine">💊 Medicine</button>
+      </div>
+      <div id="store-list" class="store-list" aria-live="polite"></div>
+    </section>
+
+    <!-- MEDICINES -->
+    <section class="view" id="view-meds" aria-labelledby="meds-h">
+      <header class="view-head">
+        <div>
+          <h1 id="meds-h" data-i18n="meds_title">Medicine continuity card</h1>
+          <p class="lead" data-i18n="meds_sub">Never run out of the medicines you depend on.</p>
+        </div>
+        <div class="pills"><span class="pill p-recovery">Faster recovery</span><span class="pill p-trust">Trust</span></div>
+      </header>
+
+      <div class="grid-2 align-start">
+        <form class="card" id="med-form">
+          <h2>Add a regular medicine</h2>
+          <p class="muted">Lost your doctor or pharmacist? Your old prescription or past order is enough for a repeat refill.</p>
+          <label class="field">Medicine name
+            <input id="med-name" list="med-names" placeholder="e.g. Paracetamol, Glycomet, Norvasc" required autocomplete="off">
+            <datalist id="med-names"></datalist>
+          </label>
+          <div class="row">
+            <label class="field">Doses per day
+              <input id="med-dose" type="number" min="1" max="10" value="1" required>
+            </label>
+            <label class="field">Doses left
+              <input id="med-left" type="number" min="0" max="999" value="3" required>
+            </label>
+          </div>
+          <label class="field">For whom
+            <input id="med-for" placeholder="e.g. Me, Mum, Dad" value="Me">
+          </label>
+          <p class="form-error" id="med-error" hidden></p>
+          <button class="btn" type="submit">Save to my card</button>
+        </form>
+
+        <div>
+          <div id="med-list" class="med-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDER -->
+    <section class="view" id="view-order" aria-labelledby="order-h">
+      <header class="view-head">
+        <div>
+          <h1 id="order-h" data-i18n="order_title">Your order</h1>
+          <p class="lead" data-i18n="order_sub">For you or for someone you love, with an honest place in the queue.</p>
+        </div>
+        <div class="pills"><span class="pill p-certainty">Certainty</span><span class="pill p-hope">Hope</span></div>
+      </header>
+
+      <div class="grid-2 align-start">
+        <div>
+          <div class="card">
+            <h2>In your order</h2>
+            <div id="cart-list"></div>
+          </div>
+          <div id="queue-card"></div>
+        </div>
+
+        <form class="card" id="order-form">
+          <h2>Who is it for?</h2>
+          <div class="seg" role="radiogroup" aria-label="Recipient">
+            <label><input type="radio" name="for" value="me" checked> <span>For me</span></label>
+            <label><input type="radio" name="for" value="other"> <span>For someone else</span></label>
+          </div>
+          <div id="other-fields" hidden>
+            <div class="row">
+              <label class="field">Their name
+                <input id="o-name" placeholder="e.g. Mum">
+              </label>
+              <label class="field">City
+                <input id="o-city" placeholder="e.g. Kanpur">
+              </label>
+            </div>
+            <label class="field">Their phone (for delivery)
+              <input id="o-phone" inputmode="tel" placeholder="Phone number">
+            </label>
+          </div>
+
+          <h2 class="mt">Does anyone need priority?</h2>
+          <p class="muted">We serve the most vulnerable first, and we show everyone exactly why.</p>
+          <div class="checks">
+            <label><input type="checkbox" value="elderly"> 👵 Elderly person living alone</label>
+            <label><input type="checkbox" value="infant"> 👶 Infant under 2</label>
+            <label><input type="checkbox" value="critical"> 💉 Critical medicine (insulin, heart, asthma)</label>
+            <label><input type="checkbox" value="disability"> ♿ Disability or illness, cannot go out</label>
+          </div>
+
+          <h2 class="mt">How will you pay?</h2>
+          <div class="pay" id="pay-options"></div>
+          <p class="trust-note">🔒 Prices are locked at pre-Snap rates. Report overcharging anytime.</p>
+          <p class="form-error" id="order-error" hidden></p>
+          <button class="btn btn-big" type="submit" data-i18n="place_order">Place order</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAIR SHARE -->
+    <section class="view" id="view-pass" aria-labelledby="pass-h">
+      <header class="view-head">
+        <div>
+          <h1 id="pass-h" data-i18n="pass_title">Fair-share pass & neighbour runner</h1>
+          <p class="lead" data-i18n="pass_sub">Fair supplies for every home. Neighbours helping neighbours.</p>
+        </div>
+        <div class="pills"><span class="pill p-trust">Trust</span><span class="pill p-hope">Hope</span></div>
+      </header>
+
+      <div class="grid-2 align-start">
+        <div class="card">
+          <h2>Your fair share today</h2>
+          <div id="quota"></div>
+          <h2 class="mt">Pick up without crowds</h2>
+          <p class="muted">Choose a store and a time slot. Show the pass at the counter.</p>
+          <label class="field">Store
+            <select id="pass-store"></select>
+          </label>
+          <div class="slots" id="slots" role="group" aria-label="Time slot"></div>
+          <p class="form-error" id="pass-error" hidden></p>
+          <button class="btn" id="pass-btn">Get my pickup pass</button>
+          <div id="pass-card"></div>
+        </div>
+
+        <div class="card">
+          <h2>Neighbour runner</h2>
+          <p class="muted">Half the delivery riders are gone. If you are going out anyway, carry essentials for up to 3 neighbours nearby.</p>
+          <label class="switch">
+            <input type="checkbox" id="runner-toggle">
+            <span class="sw" aria-hidden="true"></span>
+            <span>I'm going to the store now</span>
+          </label>
+          <div id="runner-list"></div>
+          <div class="runner-score" id="runner-score"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESS -->
+    <section class="view" id="view-access" aria-labelledby="access-h">
+      <header class="view-head">
+        <div>
+          <h1 id="access-h" data-i18n="access_title">Access for everyone</h1>
+          <p class="lead" data-i18n="access_sub">Any language, any phone, any ability. Or no phone at all.</p>
+        </div>
+        <div class="pills"><span class="pill p-trust">Trust</span><span class="pill p-hope">Hope</span></div>
+      </header>
+
+      <div class="grid-3">
+        <div class="card">
+          <h2>🌍 Your language</h2>
+          <div class="lang-btns">
+            <button data-lang="en">English</button>
+            <button data-lang="hi">हिन्दी</button>
+            <button data-lang="es">Español</button>
+            <button data-lang="ar">العربية</button>
+          </div>
+          <p class="muted">Right-to-left scripts like Arabic flip the whole layout.</p>
+        </div>
+
+        <div class="card">
+          <h2>👀 Seeing & reading</h2>
+          <label class="switch"><input type="checkbox" id="simple-check"><span class="sw" aria-hidden="true"></span><span>Simple mode: big text, big buttons</span></label>
+          <label class="switch"><input type="checkbox" id="contrast-check"><span class="sw" aria-hidden="true"></span><span>High contrast</span></label>
+          <button class="btn btn-soft" id="read-btn-2">🔊 Read this page aloud</button>
+        </div>
+
+        <div class="card">
+          <h2>🎙️ Order by voice</h2>
+          <p class="muted">Say items like “rice, milk, water, insulin”.</p>
+          <button class="btn btn-soft" id="voice-btn">🎙️ Start speaking</button>
+          <p id="voice-out" class="voice-out" aria-live="polite"></p>
+        </div>
+
+        <div class="card">
+          <h2>📱 No smartphone?</h2>
+          <p>Send an SMS from any phone:</p>
+          <p class="sms"><b>FOOD 2</b> to <b id="sms-num">56767</b></p>
+          <p class="muted">“2” is the number of people at home. Or give a missed call and we call you back.</p>
+        </div>
+
+        <div class="card">
+          <h2>🤲 No phone at all?</h2>
+          <ul class="help-points" id="help-points"></ul>
+        </div>
+
+        <div class="card">
+          <h2>🪪 No ID or money?</h2>
+          <p>You can order with just a phone number, or a volunteer can confirm who you are. Refugees and migrants are welcome.</p>
+          <p class="muted">Free kits are available for anyone who cannot pay, funded by governments, UN agencies and NGOs.</p>
+          <p class="status-line" id="net-status"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="pills">
+      <span class="pill p-hope">Hope</span><span class="pill p-trust">Trust</span><span class="pill p-certainty">Certainty</span><span class="pill p-recovery">Faster recovery</span>
+    </div>
+    <p>oneWorld Essentials · Prototype built with 2018-era web technology (HTML, CSS, JavaScript). </p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- QR code library (needs internet; the pass still shows a code without it) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
